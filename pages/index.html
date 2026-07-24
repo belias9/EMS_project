@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link href="bootstrap.min.css" rel="stylesheet">
+  <link href="bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body { background: #f4f6f9; }
+    .sidebar { min-height: 100vh; background: #1e293b; width: 250px; position: fixed; }
+    .sidebar a { color: #cbd5e1; text-decoration: none; padding: 10px 20px; display: block; }
+    .sidebar a:hover, .sidebar a.active { background: #2563eb; color: white; border-radius: 8px; margin: 0 10px; }
+    .main-content { margin-left: 250px; }
+  </style>
+</head>
+<body>
+<div class="sidebar p-3">
+  <h4 class="text-white mb-4"><i class="bi bi-briefcase"></i> JobSeeker</h4>
+  <!-- MENU LINKS - CHANGE ACTIVE CLASS PER PAGE -->
+  <a href="index.html"><i class="bi bi-grid me-2"></i> Dashboard</a>
+  <a href="profile.html"><i class="bi bi-person me-2"></i> My Profile</a>
+  <a href="skills.html"><i class="bi bi-star me-2"></i> My Skills</a>
+  <a href="education.html"><i class="bi bi-mortarboard me-2"></i> Education</a>
+  <a href="experience.html"><i class="bi bi-briefcase me-2"></i> Experience</a>
+  <a href="documents.html"><i class="bi bi-file-earmark me-2"></i> My CV</a>
+  <a href="talent.html"><i class="bi bi-megaphone me-2"></i> Talent Posts</a>
+  <a href="home1.html"><i class="bi bi-list-task me-2"></i> Job Feed</a>
+  <a href="job_apply.html"><i class="bi bi-send me-2"></i> Applications</a>
+  <a href="messages.html"><i class="bi bi-chat-dots me-2"></i> Messages</a>
+</div>
+
+<div class="main-content">
+  <nav class="navbar navbar-light bg-white shadow-sm px-4">
+    <span class="navbar-brand fw-bold">Dashboard</span>
+    <span>Hi, Mary 👋</span>
+  </nav>
+  <div class="p-4">
+      <!-- PASTE TEMPLATE ABOVE, then put this in PAGE CONTENT -->
+<h3 class="mb-4">Dashboard</h3>
+<div class="row g-4">
+  <div class="col-md-3"><div class="card shadow-sm p-3 text-center"><h6>Profile Completion</h6><h2 class="text-primary">75%</h2></div></div>
+  <div class="col-md-3"><div class="card shadow-sm p-3 text-center"><h6>Saved Jobs</h6><h2 class="text-success">12</h2></div></div>
+  <div class="col-md-3"><div class="card shadow-sm p-3 text-center"><h6>Applications</h6><h2 class="text-warning">8</h2></div></div>
+  <div class="col-md-3"><div class="card shadow-sm p-3 text-center"><h6>Messages</h6><h2 class="text-info">3</h2></div></div>
+</div>
+<h4 class="mt-5">Recommended Jobs</h4>
+<div class="card shadow-sm p-3">Frontend Developer - TechCorp | $500 <button class="btn btn-sm btn-primary float-end">Apply</button></div>
+
+  </div>
+</div>
+<script src="bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+ 

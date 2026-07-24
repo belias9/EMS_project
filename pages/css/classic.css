@@ -1,0 +1,86 @@
+/* CLASSIC THEME FOR JOBSEEKER */
+Body {
+  Background: #f5f3ef; /* soft beige background */
+  Font-family: ‘Segoe UI’, Tahoma, Geneva, Verdana, sans-serif;
+  Color: #333;
+}
+
+H1, h2, h3, h4, h5 {
+  Font-family: Georgia, ‘Times New Roman’, serif; /* classic serif */
+  Color: #1e293b;
+  Font-weight: 600;
+}
+
+/* SIDEBAR – Dark Navy Classic */
+.sidebar {
+  Background: #1e293b; /* navy */
+  Border-right: 3px solid #c9a961; /* gold line */
+}
+.sidebar h4 {
+  Font-family: Georgia, serif;
+  Color: #c9a961; /* gold */
+  Letter-spacing: 1px;
+}
+.sidebar a {
+  Color: #e2e8f0;
+  Border-left: 3px solid transparent;
+}
+.sidebar a:hover, .sidebar a.active {
+  Background: #0f172a;
+  Color: #c9a961;
+  Border-left: 3px solid #c9a961;
+  Border-radius: 0;
+  Margin: 0;
+}
+
+/* CARDS – Clean White Classic */
+.card {
+  Background: #ffffff;
+  Border: 1px solid #e5e7eb;
+  Border-radius: 6px;
+  Box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.card:hover {
+  Box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* BUTTONS – Navy + Gold */
+.btn-primary {
+  Background: #1e293b;
+  Border-color: #1e293b;
+}
+.btn-primary:hover {
+  Background: #0f172a;
+  Border-color: #0f172a;
+}
+.btn-success {
+  Background: #c9a961;
+  Border-color: #c9a961;
+  Color: #1e293b;
+  Font-weight: 500;
+}
+.btn-success:hover {
+  Background: #b8964f;
+  Border-color: #b8964f;
+  Color: #1e293b;
+}
+
+/* INPUTS */
+.form-control, .form-select {
+  Border-radius: 4px;
+  Border: 1px solid #d1d5db;
+}
+.form-control:focus {
+  Border-color: #c9a961;
+  Box-shadow: 0 0 0 0.2rem rgba(201, 169, 97, 0.25);
+}
+
+/* NAVBAR */
+.navbar {
+  Background: #ffffff !important;
+  Border-bottom: 2px solid #e5e7eb;
+}
+.navbar-brand {
+  Color: #1e293b !important;
+  Font-family: Georgia, serif;
+}
