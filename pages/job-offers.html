@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Offers</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap-icons.css" rel="stylesheet">
+    <style>/* Full CSS */
+         :root{--sidebar-width:260px;--primary-dark:#1a1f36;--sidebar-bg:#0f1420;--sidebar-hover:#1a2240;--sidebar-active:#1e2a4a;--accent:#4f8ef7;--accent-light:#e8f0fe;--card-border:#e5e7eb;--success-light:#ecfdf5;--warning-light:#fffbeb;--danger-light:#fef2f2;--text-muted-sidebar:#8891a5;--bg-main:#f5f6fa;--white:#ffffff;--shadow-sm:0 1px 2px rgba(0,0,0,0.04);--shadow-md:0 4px 12px rgba(0,0,0,0.06);--shadow-lg:0 8px 30px rgba(0,0,0,0.08);--radius-sm:8px;--radius-md:12px;--radius-lg:16px;--transition:0.2s ease;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;background-color:var(--bg-main);display:flex;min-height:100vh;color:#1a1f36;letter-spacing:-0.01em;}
+        .sidebar{width:var(--sidebar-width);min-width:var(--sidebar-width);height:100vh;position:fixed;top:0;left:0;background:var(--sidebar-bg);color:#c8cdd8;overflow-y:auto;overflow-x:hidden;z-index:1000;display:flex;flex-direction:column;box-shadow:2px 0 20px rgba(0,0,0,0.25);transition:transform var(--transition);}
+        .sidebar::-webkit-scrollbar{width:4px;}.sidebar::-webkit-scrollbar-thumb{background:#2a3050;border-radius:10px;}.sidebar::-webkit-scrollbar-track{background:transparent;}
+        .sidebar-brand{padding:20px 20px 16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:10px;flex-shrink:0;}
+        .sidebar-brand .brand-icon{width:40px;height:40px;background:var(--accent);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;font-weight:700;flex-shrink:0;}
+        .sidebar-brand .brand-text{font-weight:700;font-size:15px;color:#fff;line-height:1.2;letter-spacing:-0.02em;}
+        .sidebar-brand .brand-sub{font-size:10px;color:var(--text-muted-sidebar);font-weight:400;letter-spacing:0.04em;text-transform:uppercase;}
+        .sidebar-nav{flex:1;padding:12px 0;display:flex;flex-direction:column;gap:2px;}
+        .sidebar-section{padding:16px 20px 6px 20px;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:#5a6380;font-weight:600;margin-top:4px;}
+        .sidebar-nav a{display:flex;align-items:center;gap:10px;padding:10px 16px;margin:0 8px;color:#b0b8c8;text-decoration:none;border-radius:var(--radius-sm);font-size:13.5px;font-weight:500;transition:all var(--transition);white-space:nowrap;cursor:pointer;letter-spacing:-0.01em;}
+        .sidebar-nav a:hover{background:var(--sidebar-hover);color:#e8ecf2;}
+        .sidebar-nav a.active{background:var(--sidebar-active);color:#ffffff;font-weight:600;box-shadow:inset 3px 0 0 var(--accent);}
+        .sidebar-nav a i{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+        .sidebar-nav a .badge-sidebar{margin-left:auto;background:#ef4444;color:#fff;font-size:10px;padding:3px 7px;border-radius:20px;font-weight:600;}
+        .sidebar-footer{padding:12px 16px;border-top:1px solid rgba(255,255,255,0.06);flex-shrink:0;}
+        .sidebar-footer a{display:flex;align-items:center;gap:10px;padding:10px 12px;color:#e88181;text-decoration:none;border-radius:var(--radius-sm);font-size:13.5px;font-weight:500;transition:all var(--transition);cursor:pointer;}
+        .sidebar-footer a:hover{background:rgba(239,68,68,0.1);color:#f87171;}
+        .main-content{margin-left:var(--sidebar-width);flex:1;padding:28px 30px;min-height:100vh;transition:margin-left var(--transition);}
+        .page-header{margin-bottom:24px;}.page-header h2{font-weight:700;font-size:22px;letter-spacing:-0.03em;margin-bottom:4px;}
+        .page-header .breadcrumb-text{color:#6b7280;font-size:13px;}
+        .table-card{background:var(--white);border-radius:var(--radius-md);border:1px solid var(--card-border);box-shadow:var(--shadow-sm);overflow:hidden;}
+        .table-card .card-header-custom{padding:16px 20px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between;background:#fafbfc;}
+        .table-card .card-header-custom h5{font-weight:700;font-size:15px;letter-spacing:-0.02em;margin:0;}
+        .table-card table{margin:0;font-size:13.5px;}
+        .table-card table thead th{background:#f9fafb;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;color:#6b7280;border-bottom:2px solid #e5e7eb;padding:12px 16px;}
+        .table-card table tbody td{padding:12px 16px;vertical-align:middle;border-bottom:1px solid #f3f4f6;}
+        .table-card table tbody tr:hover{background:#fafbfd;}
+        .badge-status{font-size:11px;padding:5px 10px;border-radius:20px;font-weight:600;letter-spacing:0.01em;}
+        .badge-active{background:#ecfdf5;color:#059669;}.badge-pending{background:#fffbeb;color:#d97706;}.badge-closed{background:#fef2f2;color:#dc2626;}.badge-draft{background:#f3f4f6;color:#6b7280;}
+        .btn-brand{background:var(--accent);color:#fff;border:none;font-weight:600;border-radius:var(--radius-sm);padding:9px 18px;font-size:13.5px;letter-spacing:-0.01em;transition:all var(--transition);}
+        .btn-brand:hover{background:#3b7de6;color:#fff;box-shadow:0 4px 12px rgba(79,142,247,0.3);}
+        .btn-outline-brand{border:1.5px solid #d1d5db;background:#fff;color:#374151;font-weight:600;border-radius:var(--radius-sm);padding:9px 18px;font-size:13.5px;transition:all var(--transition);}
+        .btn-outline-brand:hover{border-color:var(--accent);color:var(--accent);background:#f8faff;}
+        .action-btns .btn{padding:4px 10px;font-size:11px;border-radius:5px;margin:1px;}
+        .form-card{background:var(--white);border-radius:var(--radius-md);border:1px solid var(--card-border);box-shadow:var(--shadow-sm);padding:24px;}
+        .form-card label{font-weight:600;font-size:13px;letter-spacing:-0.01em;margin-bottom:5px;color:#374151;}
+        .form-card .form-control,.form-card .form-select{border-radius:var(--radius-sm);border:1.5px solid #e5e7eb;font-size:13.5px;padding:10px 14px;transition:all var(--transition);}
+        .form-card .form-control:focus,.form-card .form-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,142,247,0.08);}
+        .company-logo-lg{width:80px;height:80px;border-radius:var(--radius-md);background:#e8f0fe;display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--accent);font-weight:700;border:3px solid #fff;box-shadow:var(--shadow-sm);}
+        .verified-badge{display:inline-flex;align-items:center;gap:4px;background:#ecfdf5;color:#059669;font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;}
+        .message-bubble{background:#f9fafb;border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid var(--accent);margin-bottom:10px;font-size:13.5px;cursor:pointer;transition:all var(--transition);}
+        .message-bubble:hover{background:#f0f4ff;}
+        .message-bubble.unread{border-left-color:#f59e0b;background:#fffdf7;font-weight:600;}
+        .message-bubble .msg-time{font-size:11px;color:#9ca3af;}
+        .mobile-toggle{display:none;position:fixed;top:12px;left:12px;z-index:1100;background:var(--sidebar-bg);color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:20px;cursor:pointer;}
+        @media (max-width:992px){.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}.main-content{margin-left:0;}.mobile-toggle{display:block !important;}}
+    </style>
+</head>
+<body>
+<button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')"><i class="bi bi-list"></i></button>
+
+<aside class="sidebar" id="sidebar">
+    <!-- active on job-offers.html -->
+    <nav class="sidebar-nav">
+        <a href="job-offers.html" class="active"><i class="bi bi-envelope-check"></i> Job Offers</a>
+        <!-- ... -->
+    </nav>
+</aside>
+
+<main class="main-content">
+    <div class="page-header">
+        <h2>💌 Job Offers</h2>
+        <p class="breadcrumb-text">Send and manage employment offers</p>
+    </div>
+    <div class="form-card mb-3">
+        <h5>Send New Offer</h5>
+        <div class="row g-3">
+            <div class="col-md-4"><label>Applicant</label><select class="form-select"><option>Sarah Johnson</option></select></div>
+            <div class="col-md-4"><label>Position</label><input type="text" class="form-control" value="Software Developer"></div>
+            <div class="col-md-4"><label>Offered Salary</label><input type="number" class="form-control" value="95000"></div>
+            <div class="col-md-4"><label>Start Date</label><input type="date" class="form-control"></div>
+            <div class="col-md-4"><label>Contract Type</label><select class="form-select"><option>Full-time Permanent</option><option>Contract</option><option>Part-time</option></select></div>
+            <div class="col-md-4"><label>Expiry Date</label><input type="date" class="form-control"></div>
+        </div>
+        <button class="btn btn-brand mt-3"><i class="bi bi-envelope-check"></i> Send Offer</button>
+    </div>
+    <div class="table-card">
+        <div class="card-header-custom"><h5>Sent Offers</h5></div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead><tr><th>Applicant</th><th>Position</th><th>Salary</th><th>Start Date</th><th>Status</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>David Lee</strong></td><td>Senior Developer</td><td>$110,000</td><td>2026-09-01</td><td><span class="badge-status badge-offered">Accepted</span></td></tr>
+                    <tr><td><strong>Anna Kim</strong></td><td>HR Specialist</td><td>$65,000</td><td>2026-08-15</td><td><span class="badge-status badge-pending">Pending</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script src="bootstrap.bundle.min.js"></script>
+<script>
+    const currentPage = window.location.pathname.split('/').pop();
+    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === currentPage) link.classList.add('active');
+    });
+</script>
+</body>
+</html>

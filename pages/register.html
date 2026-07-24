@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="../css/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../css/ems.css" rel="stylesheet">
+</head>
+<body class="auth-page">
+    <div class="auth-card fade-in" style="max-width: 600px;">
+        <div class="auth-header">
+            <i class="bi bi-person-plus"></i>
+            <h2>Create Account</h2>
+            <p>Join EMS and start your journey</p>
+        </div>
+        
+        <div class="auth-body">
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step-dot active" id="step1Indicator">1</div>
+                <div class="step-dot" id="step2Indicator">2</div>
+            </div>
+            
+            <!-- Step 1: Account Type -->
+            <div id="step1">
+                <h5 class="text-center mb-4" style="color: var(--ems-dark); font-weight: 600;">Choose Account Type</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="account-type-card" onclick="selectAccountType('Applicant', this)">
+                            <i class="bi bi-person-badge"></i>
+                            <h5>Applicant</h5>
+                            <p>Looking for jobs</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="account-type-card" onclick="selectAccountType('Employer', this)">
+                            <i class="bi bi-building"></i>
+                            <h5>Employer</h5>
+                            <p>Hiring talent</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="account-type-card" onclick="selectAccountType('Employee', this)">
+                            <i class="bi bi-person-workspace"></i>
+                            <h5>Employee</h5>
+                            <p>Current employee</p>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="selectedRole" name="roleID" value="">
+                <div class="text-center">
+                    <button class="btn-auth" onclick="goToStep2()" id="btnStep1" disabled>
+                        Continue <i class="bi bi-arrow-right ms-1"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Personal Information -->
+            <div id="step2" style="display: none;">
+                <h5 class="text-center mb-4" style="color: var(--ems-dark); font-weight: 600;">Personal Information</h5>
+                <form id="registerForm" action="../php/register.php" method="post" enctype="multipart/form-data">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="auth-input-group">
+                                <i class="bi bi-person"></i>
+                                <input type="text" 
+                                       class="auth-input" 
+                                       id="regFirstName"
+                                       name="firstName" 
+                                       placeholder="First Name" 
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="auth-input-group">
+                                <i class="bi bi-person"></i>
+                                <input type="text" 
+                                       class="auth-input" 
+                                       id="regLastName" 
+                                       name="lastName"
+                                       placeholder="Last Name" 
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <i class="bi bi-envelope"></i>
+                        <input type="email" 
+                               class="auth-input" 
+                               id="regEmail" 
+                               name="email"
+                               placeholder="Email Address" 
+                               required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <i class="bi bi-telephone"></i>
+                        <input type="tel" 
+                               class="auth-input" 
+                               id="regPhone" 
+                               name="PhoneNumber"
+                               placeholder="Phone Number">
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <i class="bi bi-at"></i>
+                        <input type="text" 
+                               class="auth-input" 
+                               id="regUsername" 
+                               name="username"
+                               placeholder="Username" 
+                               required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <i class="bi bi-lock"></i>
+                        <input type="password" 
+                                     class="auth-input" 
+                                     id="regPassword" 
+                                     name="passwordHash"
+                                     placeholder="Password" 
+                                     required oninput="checkPassword()">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="progress" style="height: 6px; border-radius: 3px;">
+                            <div class="progress-bar" 
+                                 id="passwordStrength" 
+                                 role="progressbar" 
+                                 style="width: 0%; 
+                                 border-radius: 3px;"></div>
+                        </div>
+                        <small id="passwordMessage" class="text-muted" style="font-size: 0.8rem;">Enter a password (min 8 chars)</small>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <i class="bi bi-lock-fill"></i>
+                        <input type="password" 
+                               class="auth-input" 
+                               id="regConfirmPassword" 
+                               name="comfirm_password"
+                               placeholder="Confirm Password" required>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <i class="bi bi-image"></i>
+                        <input type="file" 
+                               class="auth-input" 
+                               id="regPhoto" 
+                               name="photo"
+                               accept="image/*" 
+                               style="padding-top: 0.6rem;">
+                    </div>
+                    
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="termsAgree" required>
+                        <label class="form-check-label" for="termsAgree" style="font-size: 0.85rem; color: var(--ems-secondary);">
+                            I agree to the <a href="#" style="color: var(--ems-primary);">Terms of Service</a> and <a href="#" style="color: var(--ems-primary);">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn-auth">
+                        <i class="bi bi-person-check me-2"></i>Register
+                    </button>
+                </form>
+                
+                <div class="text-center mt-3">
+                    <button class="btn btn-link" onclick="goToStep1()" style="color: var(--ems-secondary); text-decoration: none;">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Account Type
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="auth-footer">
+            <span style="color: var(--ems-secondary);">Already have an account?</span>
+            <a href="login.html">Sign In</a>
+        </div>
+    </div>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/ems.js"></script>
+    <script>
+        let selectedRole = '';
+        
+        function selectAccountType(role, element) {
+            let roleID='';
+            if (role ==="applicant"){roleID=01;}
+            else if(role==="employee"){roleID=02;}
+            else if(role ==="employer"){roleID=03;}
+            selectedRole = roleID;
+            document.getElementById('selectedRole').value = roleID;
+            
+            document.querySelectorAll('.account-type-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            
+            document.getElementById('btnStep1').disabled = false;
+        }
+        
+        function goToStep2() {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            document.getElementById('step1Indicator').classList.remove('active');
+            document.getElementById('step1Indicator').classList.add('completed');
+            document.getElementById('step1Indicator').innerHTML = '<i class="bi bi-check"></i>';
+            document.getElementById('step2Indicator').classList.add('active');
+        }
+        
+        function goToStep1() {
+            document.getElementById('step1').style.display = 'block';
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step1Indicator').classList.add('active');
+            document.getElementById('step1Indicator').classList.remove('completed');
+            document.getElementById('step1Indicator').innerHTML = '1';
+            document.getElementById('step2Indicator').classList.remove('active');
+        }
+        
+        function checkPassword() {
+            const password = document.getElementById('regPassword').value;
+            const strength = checkPasswordStrength(password);
+            const bar = document.getElementById('passwordStrength');
+            const msg = document.getElementById('passwordMessage');
+            
+            bar.style.width = (strength.score / 5 * 100) + '%';
+            bar.className = 'progress-bar bg-' + strength.color;
+            msg.textContent = strength.message + ' password';
+            msg.className = 'text-' + strength.color;
+        }
+        
+        
+    </script>
+</body>
+
+</html>
