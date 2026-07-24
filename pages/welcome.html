@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | EMS - Employment Management System</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --text-dark: #1e293b;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+            background: #0a0e1a;
+        }
+
+        /* ===== FULL SCREEN BACKGROUND ===== */
+        .welcome-bg {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 40%, rgba(37, 99, 235, 0.35) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 80% at 80% 60%, rgba(59, 130, 246, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 50% 50%, rgba(96, 165, 250, 0.12) 0%, transparent 70%),
+                linear-gradient(135deg, #0a0e1a 0%, #0f172a 40%, #1e1b4b 100%);
+        }
+
+        /* Animated Waves */
+        .wave-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(59, 130, 246, 0.06) 50%,
+                transparent 70%
+            );
+            animation: wave-flow 18s ease-in-out infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation-delay: -6s;
+            background: linear-gradient(
+                -45deg,
+                transparent 30%,
+                rgba(37, 99, 235, 0.05) 50%,
+                transparent 70%
+            );
+        }
+
+        .wave:nth-child(3) {
+            animation-delay: -12s;
+            background: linear-gradient(
+                90deg,
+                transparent 40%,
+                rgba(96, 165, 250, 0.04) 60%,
+                transparent 80%
+            );
+        }
+
+        @keyframes wave-flow {
+            0%, 100% { transform: translate(-25%, -25%) rotate(0deg); }
+            50% { transform: translate(-30%, -20%) rotate(5deg); }
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: orb-float 25s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(37, 99, 235, 0.25);
+            top: 10%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: rgba(59, 130, 246, 0.18);
+            bottom: 15%;
+            right: 15%;
+            animation-delay: -8s;
+        }
+
+        .orb-3 {
+            width: 280px;
+            height: 280px;
+            background: rgba(96, 165, 250, 0.12);
+            top: 50%;
+            right: 35%;
+            animation-delay: -16s;
+        }
+
+        @keyframes orb-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -40px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        /* Grid Pattern Overlay */
+        .grid-pattern {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        /* ===== CONTENT ===== */
+        .welcome-content {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* Logo */
+        .welcome-logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.3),
+                0 0 0 1px rgba(255,255,255,0.1) inset,
+                0 0 60px rgba(59, 130, 246, 0.2);
+            animation: logo-float 6s ease-in-out infinite;
+        }
+
+        @keyframes logo-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .welcome-logo i {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Title */
+        .welcome-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .welcome-title span {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Subtitle */
+        .welcome-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            max-width: 480px;
+            line-height: 1.6;
+        }
+
+        /* CTA Button */
+        .btn-welcome {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(255,255,255,0.1) inset;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-welcome::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-welcome:hover::before {
+            left: 100%;
+        }
+
+        .btn-welcome:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+            color: white;
+        }
+
+        .btn-welcome:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-welcome i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-welcome:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Stats Bar */
+        .welcome-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 4rem;
+            padding: 1.5rem 2.5rem;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.4rem;
+            display: block;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .anim-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        .anim-scale-in { animation: scaleIn 0.6s ease-out forwards; }
+        .anim-fade-up { animation: fadeInUp 0.7s ease-out forwards; }
+
+        .delay-1 { animation-delay: 0.2s; opacity: 0; }
+        .delay-2 { animation-delay: 0.4s; opacity: 0; }
+        .delay-3 { animation-delay: 0.6s; opacity: 0; }
+        .delay-4 { animation-delay: 0.8s; opacity: 0; }
+        .delay-5 { animation-delay: 1s; opacity: 0; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2.2rem;
+            }
+            .welcome-subtitle {
+                font-size: 1rem;
+            }
+            .welcome-logo {
+                width: 80px;
+                height: 80px;
+                border-radius: 22px;
+            }
+            .welcome-logo i {
+                font-size: 2.2rem;
+            }
+            .welcome-stats {
+                gap: 1.5rem;
+                padding: 1.25rem 1.75rem;
+            }
+            .stat-number {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-title {
+                font-size: 1.8rem;
+            }
+            .welcome-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="welcome-bg">
+        <div class="wave-container">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="grid-pattern"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="welcome-content">
+        <div class="welcome-logo anim-scale-in delay-1">
+            <i class="bi bi-briefcase-fill"></i>
+        </div>
+
+        <h1 class="welcome-title anim-fade-up delay-2">
+            Employment<br><span>Management System</span>
+        </h1>
+
+        <p class="welcome-subtitle anim-fade-up delay-3">
+            Connect. Hire. Grow. Your career journey starts here.
+        </p>
+
+        <a href="home.html" class="btn-welcome anim-fade-up delay-4">
+            Continue <i class="bi bi-arrow-right"></i>
+        </a>
+
+        <div class="welcome-stats anim-fade-up delay-5">
+            <div class="stat-item">
+                <span class="stat-number">10K+</span>
+                <span class="stat-label">Jobs Posted</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">5K+</span>
+                <span class="stat-label">Companies</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">50K+</span>
+                <span class="stat-label">Users</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdminDashboard</title>>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../css/ems.css" rel="stylesheet">
+</head>
+<body>
+        <div class="admin-wrapper">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand">
+                <i class="bi bi-briefcase-fill"></i>
+                <span>EMS Admin</span>
+            </div>
+            <div class="sidebar-user">
+                <img id="sidebarUserPhoto" src="https://ui-avatars.com/api/?name=Admin+User&background=2563eb&color=fff" alt="Profile">
+                <div class="sidebar-user-info">
+                    <h6 id="sidebarUserName">Admin User</h6>
+                    <small id="sidebarUserRole">Administrator</small>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <div class="sidebar-menu-title">Main</div>
+                <a href="admin-dashboard.html" class="sidebar-item active" data-page="dashboard">
+                    <i class="bi bi-speedometer2"></i><span>Dashboard</span>
+                </a>
+                <a href="user-management.html" class="sidebar-item" data-page="users">
+                    <i class="bi bi-people"></i><span>Users</span>
+                </a>
+                <a href="role-management.html" class="sidebar-item" data-page="roles">
+                    <i class="bi bi-shield-check"></i><span>Roles</span>
+                </a>
+                <a href="permission-management.html" class="sidebar-item" data-page="permissions">
+                    <i class="bi bi-key"></i><span>Permissions</span>
+                </a>
+                <div class="sidebar-menu-title">Management</div>
+                <a href="company-approval.html" class="sidebar-item" data-page="companies">
+                    <i class="bi bi-building"></i><span>Companies</span>
+                </a>
+                <a href="reports.html" class="sidebar-item" data-page="reports">
+                    <i class="bi bi-bar-chart-line"></i><span>Reports</span>
+                </a>
+                <a href="announcements.html" class="sidebar-item" data-page="announcements">
+                    <i class="bi bi-megaphone"></i><span>Announcements</span>
+                </a>
+                <a href="complaints.html" class="sidebar-item" data-page="complaints">
+                    <i class="bi bi-exclamation-circle"></i><span>Complaints</span>
+                </a>
+                <div class="sidebar-menu-title">System</div>
+                <a href="system-settings.html" class="sidebar-item" data-page="settings">
+                    <i class="bi bi-gear"></i><span>Settings</span>
+                </a>
+                <a href="#" class="sidebar-item logout" onclick="logoutUser(); return false;">
+                    <i class="bi bi-box-arrow-right"></i><span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Admin Header -->
+            <header class="admin-header">
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-sm btn-outline-secondary d-lg-none" onclick="toggleSidebar()">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <h4>Dashboard</h4>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" data-bs-toggle="tooltip" title="Notifications">
+                        <i class="bi bi-bell"></i><span class="badge bg-danger">3</span>
+                    </button>
+                    <button class="header-btn" data-bs-toggle="tooltip" title="Messages">
+                        <i class="bi bi-envelope"></i><span class="badge bg-primary">5</span>
+                    </button>
+                    <button class="header-btn" data-bs-toggle="tooltip" title="Settings">
+                        <i class="bi bi-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- Dashboard Cards -->
+                <div class="row g-4 mb-4">
+                    <div class="col-xl-2 col-md-4 col-6">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-icon icon-blue">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <h3>1,248</h3>
+                            <p>Total Users</p>
+                            <div class="trend trend-up">
+                                <i class="bi bi-arrow-up"></i> 12% this month
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-6">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-icon icon-green">
+                                <i class="bi bi-building"></i>
+                            </div>
+                            <h3>86</h3>
+                            <p>Total Companies</p>
+                            <div class="trend trend-up">
+                                <i class="bi bi-arrow-up"></i> 8% this month
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-6">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-icon icon-orange">
+                                <i class="bi bi-person-badge"></i>
+                            </div>
+                            <h3>642</h3>
+                            <p>Total Applicants</p>
+                            <div class="trend trend-up">
+                                <i class="bi bi-arrow-up"></i> 15% this month
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-6">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-icon icon-purple">
+                                <i class="bi bi-person-workspace"></i>
+                            </div>
+                            <h3>520</h3>
+                            <p>Total Employees</p>
+                            <div class="trend trend-up">
+                                <i class="bi bi-arrow-up"></i> 5% this month
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-6">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-icon icon-cyan">
+                                <i class="bi bi-briefcase"></i>
+                            </div>
+                            <h3>234</h3>
+                            <p>Active Jobs</p>
+                            <div class="trend trend-down">
+                                <i class="bi bi-arrow-down"></i> 3% this week
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-6">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-icon icon-red">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </div>
+                            <h3>89</h3>
+                            <p>Reports</p>
+                            <div class="trend trend-up">
+                                <i class="bi bi-arrow-up"></i> 20% this month
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity & Quick Stats -->
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="ems-table-card">
+                            <div class="table-header">
+                                <h5><i class="bi bi-clock-history me-2"></i>Recent Activity</h5>
+                                <a href="#" class="btn btn-sm btn-ems-secondary">View All</a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table ems-table">
+                                    <thead>
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Action</th>
+                                            <th>Target</th>
+                                            <th>Time</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>John Smith</strong></td>
+                                            <td>Posted a job</td>
+                                            <td>Senior Developer</td>
+                                            <td>2 min ago</td>
+                                            <td><span class="status-badge status-active">Active</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Sarah Williams</strong></td>
+                                            <td>Applied for job</td>
+                                            <td>UI Designer</td>
+                                            <td>15 min ago</td>
+                                            <td><span class="status-badge status-pending">Pending</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Mike Johnson</strong></td>
+                                            <td>Registered</td>
+                                            <td>New Account</td>
+                                            <td>1 hour ago</td>
+                                            <td><span class="status-badge status-pending">Pending</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>David Chen</strong></td>
+                                            <td>Updated profile</td>
+                                            <td>Profile</td>
+                                            <td>2 hours ago</td>
+                                            <td><span class="status-badge status-active">Active</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Emily Rodriguez</strong></td>
+                                            <td>Submitted complaint</td>
+                                            <td>Technical Issue</td>
+                                            <td>3 hours ago</td>
+                                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ems-table-card">
+                            <div class="table-header">
+                                <h5><i class="bi bi-pie-chart me-2"></i>User Distribution</h5>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span style="font-size: 0.9rem;"><i class="bi bi-person-badge text-primary me-1"></i> Applicants</span>
+                                        <span style="font-weight: 600;">51%</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px; border-radius: 4px;">
+                                        <div class="progress-bar bg-primary" style="width: 51%; border-radius: 4px;"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span style="font-size: 0.9rem;"><i class="bi bi-person-workspace text-warning me-1"></i> Employees</span>
+                                        <span style="font-weight: 600;">42%</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px; border-radius: 4px;">
+                                        <div class="progress-bar bg-warning" style="width: 42%; border-radius: 4px;"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span style="font-size: 0.9rem;"><i class="bi bi-building text-success me-1"></i> Employers</span>
+                                        <span style="font-weight: 600;">6%</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px; border-radius: 4px;">
+                                        <div class="progress-bar bg-success" style="width: 6%; border-radius: 4px;"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-0">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span style="font-size: 0.9rem;"><i class="bi bi-shield-lock text-danger me-1"></i> Admins</span>
+                                        <span style="font-weight: 600;">1%</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px; border-radius: 4px;">
+                                        <div class="progress-bar bg-danger" style="width: 1%; border-radius: 4px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/ems.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminAccess();
+        });
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Settings | EMS Admin</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/ems-styles.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --content-bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--content-bg);
+            overflow-x: hidden;
+        }
+
+        .admin-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .admin-sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            color: #fff;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sidebar-brand i {
+            color: var(--primary);
+        }
+
+        .sidebar-user {
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .sidebar-user img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sidebar-user-info h6 {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .sidebar-user-info small {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .sidebar-menu {
+            padding: 1rem 0;
+        }
+
+        .sidebar-menu-title {
+            padding: 0.75rem 1.5rem 0.5rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-item:hover {
+            background: var(--sidebar-hover);
+            color: #fff;
+        }
+
+        .sidebar-item.active {
+            background: var(--sidebar-hover);
+            color: #fff;
+            border-left-color: var(--primary);
+        }
+
+        .sidebar-item i {
+            font-size: 1.1rem;
+            width: 24px;
+        }
+
+        .sidebar-item.logout {
+            color: var(--danger);
+        }
+
+        .sidebar-item.logout:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Main Content */
+        .admin-main {
+            flex: 1;
+            margin-left: 260px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-header {
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .admin-header h4 {
+            margin: 0;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .admin-content {
+            padding: 2rem;
+            flex: 1;
+        }
+
+        /* Cards */
+        .ems-form-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .ems-form-card h5, .ems-form-card h6 {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .ems-form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: #475569;
+        }
+
+        .ems-form-input {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            background: #fff;
+        }
+
+        .ems-form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .ems-logo-large {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        /* Toggle Switches */
+        .form-switch .form-check-input {
+            width: 2.5em;
+            height: 1.25em;
+            cursor: pointer;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn-ems-primary {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.625rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-ems-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-ems-outline {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 0.625rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-ems-outline:hover {
+            background: var(--content-bg);
+            color: #1e293b;
+        }
+
+        /* Status Cards */
+        .status-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+        }
+
+        .status-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
+        }
+
+        .status-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .status-icon.online { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .status-icon.warning { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .status-icon.info { background: rgba(37, 99, 235, 0.1); color: var(--primary); }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1050;
+        }
+
+        .ems-toast {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-left: 4px solid var(--success);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 300px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+            .admin-sidebar.show {
+                transform: translateX(0);
+            }
+            .admin-main {
+                margin-left: 0;
+            }
+        }
+
+        /* Theme Preview */
+        .theme-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .theme-preview:hover, .theme-preview.active {
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .theme-blue { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+        .theme-purple { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+        .theme-teal { background: linear-gradient(135deg, #0d9488, #0f766e); }
+        .theme-rose { background: linear-gradient(135deg, #e11d48, #be123c); }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <i class="bi bi-briefcase-fill"></i>
+                <span>EMS Admin</span>
+            </div>
+            <div class="sidebar-user">
+                <img id="sidebarUserPhoto" src="https://ui-avatars.com/api/?name=Admin+User&background=2563eb&color=fff" alt="Profile">
+                <div class="sidebar-user-info">
+                    <h6 id="sidebarUserName">Admin User</h6>
+                    <small id="sidebarUserRole">Administrator</small>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <div class="sidebar-menu-title">Main</div>
+                <a href="admin-dashboard.html" class="sidebar-item" data-page="dashboard">
+                    <i class="bi bi-speedometer2"></i><span>Dashboard</span>
+                </a>
+                <a href="user-management.html" class="sidebar-item" data-page="users">
+                    <i class="bi bi-people"></i><span>Users</span>
+                </a>
+                <a href="role-management.html" class="sidebar-item" data-page="roles">
+                    <i class="bi bi-shield-check"></i><span>Roles</span>
+                </a>
+                <a href="permission-management.html" class="sidebar-item" data-page="permissions">
+                    <i class="bi bi-key"></i><span>Permissions</span>
+                </a>
+                
+                <div class="sidebar-menu-title">Management</div>
+                <a href="company-approval.html" class="sidebar-item" data-page="companies">
+                    <i class="bi bi-building"></i><span>Companies</span>
+                </a>
+                <a href="reports.html" class="sidebar-item" data-page="reports">
+                    <i class="bi bi-bar-chart-line"></i><span>Reports</span>
+                </a>
+                <a href="announcements.html" class="sidebar-item" data-page="announcements">
+                    <i class="bi bi-megaphone"></i><span>Announcements</span>
+                </a>
+                <a href="complaints.html" class="sidebar-item" data-page="complaints">
+                    <i class="bi bi-exclamation-circle"></i><span>Complaints</span>
+                </a>
+                
+                <div class="sidebar-menu-title">System</div>
+                <a href="system-settings.html" class="sidebar-item active" data-page="settings">
+                    <i class="bi bi-gear"></i><span>Settings</span>
+                </a>
+                <a href="#" class="sidebar-item logout" onclick="logoutUser(); return false;">
+                    <i class="bi bi-box-arrow-right"></i><span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-sm btn-outline-secondary d-lg-none" onclick="toggleSidebar()">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <h4>System Settings</h4>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-sm btn-ems-outline" onclick="resetSettings()">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
+                    </button>
+                    <button class="btn btn-sm btn-ems-primary" onclick="document.getElementById('settingsForm').dispatchEvent(new Event('submit'))">
+                        <i class="bi bi-check-lg me-1"></i>Save Changes
+                    </button>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <div class="row g-4">
+                    <!-- Left Column: Settings Forms -->
+                    <div class="col-lg-8">
+                        <!-- General Settings -->
+                        <div class="ems-form-card">
+                            <h5 class="mb-4"><i class="bi bi-gear me-2 text-primary"></i>General Settings</h5>
+                            <form id="settingsForm" onsubmit="saveSettings(event)">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="ems-form-label">System Name</label>
+                                        <input type="text" class="ems-form-input" id="sysName" value="Employment Management System" placeholder="Enter system name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="ems-form-label">Support Email</label>
+                                        <input type="email" class="ems-form-input" id="sysEmail" value="support@ems.com" placeholder="support@example.com">
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <label class="ems-form-label">System Logo</label>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="ems-logo-large">
+                                            <i class="bi bi-briefcase-fill"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <input type="file" class="ems-form-input" id="logoUpload" accept="image/*" onchange="previewLogo(this)">
+                                            <small class="text-muted">Recommended: 512x512px PNG or SVG</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3">
+                                    <label class="ems-form-label">System Description</label>
+                                    <textarea class="ems-form-input" id="sysDesc" rows="3" placeholder="Brief description of the system...">A comprehensive platform for managing employment processes, company approvals, and user administration.</textarea>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <!-- Security Settings -->
+                                <h6 class="mb-3"><i class="bi bi-shield-lock me-2 text-primary"></i>Security Settings</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="ems-form-label">Max Login Attempts</label>
+                                        <input type="number" class="ems-form-input" id="maxAttempts" value="5" min="1" max="10">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="ems-form-label">Session Timeout (minutes)</label>
+                                        <input type="number" class="ems-form-input" id="sessionTimeout" value="30" min="5" max="120">
+                                    </div>
+                                </div>
+                                
+                                <div class="row g-3 mt-1">
+                                    <div class="col-md-6">
+                                        <label class="ems-form-label">Password Min Length</label>
+                                        <input type="number" class="ems-form-input" id="pwdMinLength" value="8" min="6" max="32">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="ems-form-label">2FA Method</label>
+                                        <select class="ems-form-input" id="twoFactorMethod">
+                                            <option value="none">Disabled</option>
+                                            <option value="email" selected>Email OTP</option>
+                                            <option value="authenticator">Authenticator App</option>
+                                            <option value="sms">SMS</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="enableReg" checked>
+                                        <label class="form-check-label" for="enableReg">Enable New Registrations</label>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="requireApproval" checked>
+                                        <label class="form-check-label" for="requireApproval">Require Admin Approval for New Accounts</label>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="forceHttps">
+                                        <label class="form-check-label" for="forceHttps">Force HTTPS Redirect</label>
+                                    </div>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <!-- Notification Settings -->
+                                <h6 class="mb-3"><i class="bi bi-bell me-2 text-primary"></i>Notification Settings</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="ems-form-label">Email Provider</label>
+                                        <select class="ems-form-input" id="emailProvider">
+                                            <option value="smtp">SMTP Server</option>
+                                            <option value="sendgrid">SendGrid</option>
+                                            <option value="mailgun">Mailgun</option>
+                                            <option value="ses">Amazon SES</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="ems-form-label">Daily Email Limit</label>
+                                        <input type="number" class="ems-form-input" id="emailLimit" value="1000" min="100" step="100">
+                                    </div>
+                                </div>
+
+                                <div class="mt-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="notifyNewUser" checked>
+                                        <label class="form-check-label" for="notifyNewUser">Notify admins on new user registration</label>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="notifyComplaint" checked>
+                                        <label class="form-check-label" for="notifyComplaint">Notify on new complaint submission</label>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="notifyReport">
+                                        <label class="form-check-label" for="notifyReport">Weekly summary reports</label>
+                                    </div>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <!-- Appearance Settings -->
+                                <h6 class="mb-3"><i class="bi bi-palette me-2 text-primary"></i>Appearance</h6>
+                                <div class="mb-3">
+                                    <label class="ems-form-label">Theme Color</label>
+                                    <div class="d-flex gap-3 mt-2">
+                                        <div class="theme-preview theme-blue active" onclick="setTheme('blue')" title="Blue"></div>
+                                        <div class="theme-preview theme-purple" onclick="setTheme('purple')" title="Purple"></div>
+                                        <div class="theme-preview theme-teal" onclick="setTheme('teal')" title="Teal"></div>
+                                        <div class="theme-preview theme-rose" onclick="setTheme('rose')" title="Rose"></div>
+                                    </div>
+                                </div>
+                                <div class="form-check form-switch mt-3">
+                                    <input class="form-check-input" type="checkbox" id="darkMode">
+                                    <label class="form-check-label" for="darkMode">Enable Dark Mode</label>
+                                </div>
+
+                                <div class="mt-4 d-flex gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-ems-outline" onclick="resetSettings()">Cancel</button>
+                                    <button type="submit" class="btn btn-ems-primary">
+                                        <i class="bi bi-check-lg me-1"></i>Save All Settings
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Danger Zone -->
+                        <div class="ems-form-card border-danger">
+                            <h5 class="mb-3 text-danger"><i class="bi bi-exclamation-triangle me-2"></i>Danger Zone</h5>
+                            <p class="text-muted mb-3">These actions are irreversible. Please proceed with caution.</p>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button class="btn btn-outline-warning" onclick="clearCache()">
+                                    <i class="bi bi-trash me-1"></i>Clear System Cache
+                                </button>
+                                <button class="btn btn-outline-danger" onclick="resetSystem()">
+                                    <i class="bi bi-arrow-counterclockwise me-1"></i>Reset to Factory Defaults
+                                </button>
+                                <button class="btn btn-outline-danger" onclick="exportData()">
+                                    <i class="bi bi-download me-1"></i>Export All Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Status & Info -->
+                    <div class="col-lg-4">
+                        <!-- System Status -->
+                        <div class="ems-form-card mb-4">
+                            <h6 class="mb-3"><i class="bi bi-activity me-2 text-primary"></i>System Status</h6>
+                            <div class="d-flex flex-column gap-3">
+                                <div class="status-card">
+                                    <div class="status-icon online">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-semibold">System Online</div>
+                                        <small class="text-muted">Uptime: 99.9%</small>
+                                    </div>
+                                </div>
+                                <div class="status-card">
+                                    <div class="status-icon info">
+                                        <i class="bi bi-hdd-fill"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-semibold">Database</div>
+                                        <small class="text-muted">Connected • v14.2</small>
+                                    </div>
+                                </div>
+                                <div class="status-card">
+                                    <div class="status-icon warning">
+                                        <i class="bi bi-envelope-fill"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-semibold">Email Queue</div>
+                                        <small class="text-muted">12 pending • 847 sent today</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Info -->
+                        <div class="ems-form-card">
+                            <h6 class="mb-3"><i class="bi bi-info-circle me-2 text-primary"></i>System Information</h6>
+                            <ul class="list-unstyled mb-0">
+                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                    <span class="text-muted">Version</span>
+                                    <span class="fw-semibold">v2.4.1</span>
+                                </li>
+                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                    <span class="text-muted">Last Updated</span>
+                                    <span class="fw-semibold">Jul 20, 2026</span>
+                                </li>
+                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                    <span class="text-muted">Environment</span>
+                                    <span class="badge bg-success">Production</span>
+                                </li>
+                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                    <span class="text-muted">Total Users</span>
+                                    <span class="fw-semibold">1,247</span>
+                                </li>
+                                <li class="d-flex justify-content-between py-2">
+                                    <span class="text-muted">Active Sessions</span>
+                                    <span class="fw-semibold">42</span>
+                                </li>
+                            </ul>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-ems-outline w-100" onclick="checkUpdates()">
+                                    <i class="bi bi-arrow-repeat me-1"></i>Check for Updates
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sidebar Toggle
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('show');
+        }
+
+        // Save Settings
+        function saveSettings(e) {
+            e.preventDefault();
+            
+            const settings = {
+                systemName: document.getElementById('sysName').value,
+                supportEmail: document.getElementById('sysEmail').value,
+                description: document.getElementById('sysDesc').value,
+                maxLoginAttempts: document.getElementById('maxAttempts').value,
+                sessionTimeout: document.getElementById('sessionTimeout').value,
+                passwordMinLength: document.getElementById('pwdMinLength').value,
+                twoFactorMethod: document.getElementById('twoFactorMethod').value,
+                enableRegistration: document.getElementById('enableReg').checked,
+                requireApproval: document.getElementById('requireApproval').checked,
+                forceHttps: document.getElementById('forceHttps').checked,
+                emailProvider: document.getElementById('emailProvider').value,
+                emailLimit: document.getElementById('emailLimit').value,
+                notifyNewUser: document.getElementById('notifyNewUser').checked,
+                notifyComplaint: document.getElementById('notifyComplaint').checked,
+                notifyReport: document.getElementById('notifyReport').checked,
+                darkMode: document.getElementById('darkMode').checked
+            };
+
+            // Simulate API call
+            console.log('Saving settings:', settings);
+            
+            // Show success toast
+            showToast('Settings saved successfully!', 'success');
+            
+            // Update page title if system name changed
+            document.title = settings.systemName + ' | EMS Admin';
+        }
+
+        // Reset Settings
+        function resetSettings() {
+            if (confirm('Are you sure you want to reset all settings to default?')) {
+                document.getElementById('settingsForm').reset();
+                showToast('Settings reset to defaults', 'info');
+            }
+        }
+
+        // Preview Logo
+        function previewLogo(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const logo = document.querySelector('.ems-logo-large');
+                    logo.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">`;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Set Theme
+        function setTheme(color) {
+            document.querySelectorAll('.theme-preview').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+            showToast(`Theme changed to ${color}`, 'info');
+        }
+
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'ems-toast';
+            toast.style.borderLeftColor = type === 'success' ? '#10b981' : type === 'danger' ? '#ef4444' : '#2563eb';
+            
+            const icon = type === 'success' ? 'check-circle' : type === 'danger' ? 'x-circle' : 'info-circle';
+            
+            toast.innerHTML = `
+                <i class="bi bi-${icon}-fill text-${type === 'success' ? 'success' : type === 'danger' ? 'danger' : 'primary'}"></i>
+                <div class="fw-medium">${message}</div>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Danger Zone Actions
+        function clearCache() {
+            if (confirm('Clear all system cache? This may temporarily slow down the system.')) {
+                showToast('System cache cleared successfully', 'success');
+            }
+        }
+
+        function resetSystem() {
+            if (confirm('WARNING: This will reset ALL settings to factory defaults. This action cannot be undone!')) {
+                if (confirm('Are you absolutely sure? All custom configurations will be lost.')) {
+                    showToast('System reset to factory defaults', 'danger');
+                }
+            }
+        }
+
+        function exportData() {
+            showToast('Preparing data export...', 'info');
+            setTimeout(() => {
+                showToast('Data export ready for download', 'success');
+            }, 1500);
+        }
+
+        function checkUpdates() {
+            showToast('Checking for updates...', 'info');
+            setTimeout(() => {
+                showToast('You are running the latest version (v2.4.1)', 'success');
+            }, 1500);
+        }
+
+        function logoutUser() {
+            if (confirm('Are you sure you want to logout?')) {
+                showToast('Logging out...', 'info');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            }
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.querySelector('.btn-outline-secondary');
+            if (window.innerWidth < 992 && sidebar.classList.contains('show')) {
+                if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+                    sidebar.classList.remove('show');
+                }
+            }
+        });
+
+        // Load saved settings on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate loading saved settings
+            console.log('Settings page loaded');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | EMS Admin</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/ems.css" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-wrapper">
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand"><i class="bi bi-briefcase-fill"></i><span>EMS Admin</span></div>
+            <div class="sidebar-user">
+                <img id="sidebarUserPhoto" src="https://ui-avatars.com/api/?name=Admin+User&background=2563eb&color=fff" alt="Profile">
+                <div class="sidebar-user-info">
+                    <h6 id="sidebarUserName">Admin User</h6>
+                    <small id="sidebarUserRole">Administrator</small>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <div class="sidebar-menu-title">Main</div>
+                <a href="admin-dashboard.html" class="sidebar-item" data-page="dashboard"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+                <a href="user-management.html" class="sidebar-item" data-page="users"><i class="bi bi-people"></i><span>Users</span></a>
+                <a href="role-management.html" class="sidebar-item" data-page="roles"><i class="bi bi-shield-check"></i><span>Roles</span></a>
+                <a href="permission-management.html" class="sidebar-item" data-page="permissions"><i class="bi bi-key"></i><span>Permissions</span></a>
+                <div class="sidebar-menu-title">Management</div>
+                <a href="company-approval.html" class="sidebar-item" data-page="companies"><i class="bi bi-building"></i><span>Companies</span></a>
+                <a href="reports.html" class="sidebar-item active" data-page="reports"><i class="bi bi-bar-chart-line"></i><span>Reports</span></a>
+                <a href="announcements.html" class="sidebar-item" data-page="announcements"><i class="bi bi-megaphone"></i><span>Announcements</span></a>
+                <a href="complaints.html" class="sidebar-item" data-page="complaints"><i class="bi bi-exclamation-circle"></i><span>Complaints</span></a>
+                <div class="sidebar-menu-title">System</div>
+                <a href="system-settings.html" class="sidebar-item" data-page="settings"><i class="bi bi-gear"></i><span>Settings</span></a>
+                <a href="#" class="sidebar-item logout" onclick="logoutUser(); return false;"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-sm btn-outline-secondary d-lg-none" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+                    <h4>Reports</h4>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-ems-secondary btn-sm"><i class="bi bi-download me-1"></i> Export</button>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-icon icon-blue"><i class="bi bi-people"></i></div>
+                            <h3>1,248</h3>
+                            <p>Users Report</p>
+                            <button class="btn btn-sm btn-outline-primary mt-2 w-100" onclick="showToast('Generating Users Report...', 'info')">View Report</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-icon icon-green"><i class="bi bi-briefcase"></i></div>
+                            <h3>234</h3>
+                            <p>Job Report</p>
+                            <button class="btn btn-sm btn-outline-success mt-2 w-100" onclick="showToast('Generating Job Report...', 'info')">View Report</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-icon icon-orange"><i class="bi bi-file-earmark-text"></i></div>
+                            <h3>1,856</h3>
+                            <p>Application Report</p>
+                            <button class="btn btn-sm btn-outline-warning mt-2 w-100" onclick="showToast('Generating Application Report...', 'info')">View Report</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-icon icon-purple"><i class="bi bi-person-workspace"></i></div>
+                            <h3>520</h3>
+                            <p>Employee Report</p>
+                            <button class="btn btn-sm btn-outline-info mt-2 w-100" onclick="showToast('Generating Employee Report...', 'info')">View Report</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-2">
+                    <div class="col-lg-8">
+                        <div class="ems-table-card">
+                            <div class="table-header">
+                                <h5><i class="bi bi-graph-up me-2"></i>Monthly Activity Overview</h5>
+                                <select class="form-select form-select-sm" style="width: 120px;">
+                                    <option>2026</option>
+                                    <option>2025</option>
+                                </select>
+                            </div>
+                            <div class="p-4">
+                                <div class="d-flex align-items-end justify-content-around" style="height: 250px;">
+                                    <div class="text-center" style="width: 8%;">
+                                        <div style="height: 120px; background: linear-gradient(to top, #2563eb, #60a5fa); border-radius: 8px 8px 0 0;"></div>
+                                        <small class="d-block mt-2 text-muted">Jan</small>
+                                    </div>
+                                    <div class="text-center" style="width: 8%;">
+                                        <div style="height: 150px; background: linear-gradient(to top, #2563eb, #60a5fa); border-radius: 8px 8px 0 0;"></div>
+                                        <small class="d-block mt-2 text-muted">Feb</small>
+                                    </div>
+                                    <div class="text-center" style="width: 8%;">
+                                        <div style="height: 100px; background: linear-gradient(to top, #2563eb, #60a5fa); border-radius: 8px 8px 0 0;"></div>
+                                        <small class="d-block mt-2 text-muted">Mar</small>
+                                    </div>
+                                    <div class="text-center" style="width: 8%;">
+                                        <div style="height: 180px; background: linear-gradient(to top, #2563eb, #60a5fa); border-radius: 8px 8px 0 0;"></div>
+                                        <small class="d-block mt-2 text-muted">Apr</small>
+                                    </div>
+                                    <div class="text-center" style="width: 8%;">
+                                        <div style="height: 200px; background: linear-gradient(to top, #2563eb, #60a5fa); border-radius: 8px 8px 0 0;"></div>
+                                        <small class="d-block mt-2 text-muted">May</small>
+                                    </div>
+                                    <div class="text-center" style="width: 8%;">
+                                        <div style="height: 160px; background: linear-gradient(to top, #2563eb, #60a5fa); border-radius: 8px 8px 0 0;"></div>
+                                        <small class="d-block mt-2 text-muted">Jun</small>
+                                    </div>
+                                    <div class="text-center" style="width: 8%;">
+                                        <div style="height: 220px; background: linear-gradient(to top, #2563eb, #60a5fa); border-radius: 8px 8px 0 0;"></div>
+                                        <small class="d-block mt-2 text-muted">Jul</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ems-table-card">
+                            <div class="table-header">
+                                <h5><i class="bi bi-trophy me-2"></i>Top Performing</h5>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex align-items-center gap-3 p-2 mb-2 rounded-3" style="background: #f8fafc;">
+                                    <div class="dashboard-card-icon icon-blue" style="width:40px;height:40px;font-size:1rem;margin:0;"><i class="bi bi-1-circle"></i></div>
+                                    <div>
+                                        <h6 class="mb-0" style="font-size:0.9rem;">TechCorp Solutions</h6>
+                                        <small class="text-muted">45 jobs posted</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 p-2 mb-2 rounded-3" style="background: #f8fafc;">
+                                    <div class="dashboard-card-icon icon-green" style="width:40px;height:40px;font-size:1rem;margin:0;"><i class="bi bi-2-circle"></i></div>
+                                    <div>
+                                        <h6 class="mb-0" style="font-size:0.9rem;">Design Studio Pro</h6>
+                                        <small class="text-muted">32 jobs posted</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 p-2 mb-2 rounded-3" style="background: #f8fafc;">
+                                    <div class="dashboard-card-icon icon-orange" style="width:40px;height:40px;font-size:1rem;margin:0;"><i class="bi bi-3-circle"></i></div>
+                                    <div>
+                                        <h6 class="mb-0" style="font-size:0.9rem;">DataFlow Analytics</h6>
+                                        <small class="text-muted">28 jobs posted</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/ems.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminAccess();
+        });
+    </script>
+</body>
+</html>

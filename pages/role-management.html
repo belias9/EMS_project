@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permission Management | EMS Admin</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/ems.css" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-wrapper">
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand"><i class="bi bi-briefcase-fill"></i><span>EMS Admin</span></div>
+            <div class="sidebar-user">
+                <img id="sidebarUserPhoto" src="https://ui-avatars.com/api/?name=Admin+User&background=2563eb&color=fff" alt="Profile">
+                <div class="sidebar-user-info">
+                    <h6 id="sidebarUserName">Admin User</h6>
+                    <small id="sidebarUserRole">Administrator</small>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <div class="sidebar-menu-title">Main</div>
+                <a href="admin-dashboard.html" class="sidebar-item" data-page="dashboard"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+                <a href="user-management.html" class="sidebar-item" data-page="users"><i class="bi bi-people"></i><span>Users</span></a>
+                <a href="role-management.html" class="sidebar-item" data-page="roles"><i class="bi bi-shield-check"></i><span>Roles</span></a>
+                <a href="permission-management.html" class="sidebar-item active" data-page="permissions"><i class="bi bi-key"></i><span>Permissions</span></a>
+                <div class="sidebar-menu-title">Management</div>
+                <a href="company-approval.html" class="sidebar-item" data-page="companies"><i class="bi bi-building"></i><span>Companies</span></a>
+                <a href="reports.html" class="sidebar-item" data-page="reports"><i class="bi bi-bar-chart-line"></i><span>Reports</span></a>
+                <a href="announcements.html" class="sidebar-item" data-page="announcements"><i class="bi bi-megaphone"></i><span>Announcements</span></a>
+                <a href="complaints.html" class="sidebar-item" data-page="complaints"><i class="bi bi-exclamation-circle"></i><span>Complaints</span></a>
+                <div class="sidebar-menu-title">System</div>
+                <a href="system-settings.html" class="sidebar-item" data-page="settings"><i class="bi bi-gear"></i><span>Settings</span></a>
+                <a href="#" class="sidebar-item logout" onclick="logoutUser(); return false;"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-sm btn-outline-secondary d-lg-none" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+                    <h4>Permission Management</h4>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <div class="row g-4">
+                    <div class="col-lg-7">
+                        <div class="ems-table-card">
+                            <div class="table-header">
+                                <h5><i class="bi bi-key me-2"></i>All Permissions</h5>
+                                <button class="btn btn-ems-primary btn-sm"><i class="bi bi-plus-lg me-1"></i> Add Permission</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table ems-table">
+                                    <thead>
+                                        <tr><th>ID</th><th>Permission Name</th><th>Description</th><th>Module</th><th>Action</th></tr>
+                                    </thead>
+                                    <tbody id="permissionsTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="ems-form-card">
+                            <h5 class="mb-3"><i class="bi bi-shield-check me-2"></i>Assign Permissions to Roles</h5>
+                            <div class="mb-3">
+                                <label class="ems-form-label">Select Role</label>
+                                <select class="ems-form-select" id="roleSelect" onchange="loadRolePermissions()">
+                                    <option value="1">Administrator</option>
+                                    <option value="2">Employer</option>
+                                    <option value="3">Employee</option>
+                                    <option value="4">Applicant</option>
+                                </select>
+                            </div>
+                            <div id="rolePermissionsList" class="mt-3">
+                                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" checked id="perm1"><label class="form-check-label" for="perm1">Manage Users</label></div>
+                                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" checked id="perm2"><label class="form-check-label" for="perm2">Manage Roles</label></div>
+                                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" checked id="perm3"><label class="form-check-label" for="perm3">Manage Permissions</label></div>
+                                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" checked id="perm4"><label class="form-check-label" for="perm4">Manage Companies</label></div>
+                                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" checked id="perm7"><label class="form-check-label" for="perm7">View Reports</label></div>
+                                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" checked id="perm8"><label class="form-check-label" for="perm8">Manage Announcements</label></div>
+                                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" checked id="perm9"><label class="form-check-label" for="perm9">Manage Complaints</label></div>
+                                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" checked id="perm10"><label class="form-check-label" for="perm10">System Settings</label></div>
+                            </div>
+                            <button class="btn btn-ems-primary w-100 mt-3" onclick="showToast('Permissions updated!', 'success')">
+                                <i class="bi bi-check-lg me-1"></i> Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/ems.js"></script>
+    <script>
+        function renderPermissions() {
+            document.getElementById('permissionsTableBody').innerHTML = demoPermissions.map(perm => `
+                <tr>
+                    <td><strong>#${perm.permissionID}</strong></td>
+                    <td>${perm.permissionName}</td>
+                    <td>${perm.permissionDescription}</td>
+                    <td><span class="badge bg-secondary">${perm.moduleName}</span></td>
+                    <td>
+                        <div class="table-actions">
+                            <button class="btn-table-action btn-edit"><i class="bi bi-pencil"></i></button>
+                            <button class="btn-table-action btn-delete"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function loadRolePermissions() {
+            const roleId = document.getElementById('roleSelect').value;
+            const employerPerms = [5, 6];
+            const employeePerms = [6];
+            const applicantPerms = [];
+            
+            document.querySelectorAll('#rolePermissionsList .form-check-input').forEach(cb => {
+                const permId = parseInt(cb.id.replace('perm', ''));
+                if (roleId === '1') cb.checked = true;
+                else if (roleId === '2') cb.checked = employerPerms.includes(permId) || [1,2,3,4,7,8,9,10].includes(permId);
+                else if (roleId === '3') cb.checked = employeePerms.includes(permId);
+                else cb.checked = applicantPerms.includes(permId);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminAccess();
+            renderPermissions();
+        });
+    </script>
+</body>
+</html>
